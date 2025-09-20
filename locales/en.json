@@ -1,0 +1,21 @@
+{
+  "appTitle": "AI Padel Court Designer",
+  "githubLink": "Go to GitHub repository",
+  "aiDesignerTitle": "AI Designer",
+  "promptPlaceholder": "e.g., A futuristic court with neon blue accents",
+  "generating": "Generating...",
+  "generateDesign": "Generate Design",
+  "unknownError": "An unknown error occurred.",
+  "manualControlsTitle": "Manual Controls",
+  "resetToDefault": "Reset to default",
+  "courtColor": "Court Color",
+  "linesColor": "Lines Color",
+  "outOfPlayColor": "Out of Play Color",
+  "frameColor": "Frame Color",
+  "netColor": "Net Color",
+  "netLogoColor": "Net Logo Color",
+  "glassOpacity": "Glass Opacity",
+  "dimensionLength": "Length: {length}m",
+  "dimensionWidth": "Width: {width}m",
+  "dimensionWallHeight": "Wall Height: {height}m"
+}

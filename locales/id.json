@@ -1,0 +1,21 @@
+{
+  "appTitle": "Desainer Lapangan Padel AI",
+  "githubLink": "Buka repositori GitHub",
+  "aiDesignerTitle": "Desainer AI",
+  "promptPlaceholder": "cth., Lapangan futuristik dengan aksen neon biru",
+  "generating": "Membuat...",
+  "generateDesign": "Buat Desain",
+  "unknownError": "Terjadi kesalahan yang tidak diketahui.",
+  "manualControlsTitle": "Kontrol Manual",
+  "resetToDefault": "Setel ulang ke default",
+  "courtColor": "Warna Lapangan",
+  "linesColor": "Warna Garis",
+  "outOfPlayColor": "Warna Area Luar",
+  "frameColor": "Warna Rangka",
+  "netColor": "Warna Jaring",
+  "netLogoColor": "Warna Logo Jaring",
+  "glassOpacity": "Opasitas Kaca",
+  "dimensionLength": "Panjang: {length}m",
+  "dimensionWidth": "Lebar: {width}m",
+  "dimensionWallHeight": "Tinggi Dinding: {height}m"
+}

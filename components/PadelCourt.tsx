@@ -2,10 +2,10 @@
 /// <reference types="@react-three/fiber" />
 
 import React from 'react';
-import { useLoader } from '@react-three/fiber';
 import * as THREE from 'three';
 import type { CourtDesign } from '../types';
 import { Text } from '@react-three/drei';
+import { useI18n } from '../contexts/i18n';
 
 const COURT_LENGTH = 20;
 const COURT_WIDTH = 10;
@@ -89,6 +89,7 @@ function PadelCourt({
     netColor,
     logoColor
 }: CourtDesign) {
+    const { t } = useI18n();
     
     return (
         <group>
@@ -180,17 +181,17 @@ function PadelCourt({
             {/* Dimensions */}
             <group>
                  {/* Court Length (Right) */}
-                <DimensionLabel text={`Panjang: ${COURT_LENGTH}m`} position={[COURT_WIDTH / 2 + 1, 0.1, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 2]} />
+                <DimensionLabel text={t('dimensionLength', { length: COURT_LENGTH })} position={[COURT_WIDTH / 2 + 1, 0.1, 0]} rotation={[-Math.PI / 2, 0, Math.PI / 2]} />
                 {/* Court Length (Left) */}
-                <DimensionLabel text={`Panjang: ${COURT_LENGTH}m`} position={[-COURT_WIDTH / 2 - 1, 0.1, 0]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]} />
+                <DimensionLabel text={t('dimensionLength', { length: COURT_LENGTH })} position={[-COURT_WIDTH / 2 - 1, 0.1, 0]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]} />
                 
                 {/* Court Width (Back) */}
-                <DimensionLabel text={`Lebar: ${COURT_WIDTH}m`} position={[0, 0.1, -COURT_LENGTH / 2 - 1]} rotation={[-Math.PI / 2, 0, 0]} />
+                <DimensionLabel text={t('dimensionWidth', { width: COURT_WIDTH })} position={[0, 0.1, -COURT_LENGTH / 2 - 1]} rotation={[-Math.PI / 2, 0, 0]} />
                 {/* Court Width (Front) */}
-                <DimensionLabel text={`Lebar: ${COURT_WIDTH}m`} position={[0, 0.1, COURT_LENGTH / 2 + 1]} rotation={[-Math.PI / 2, 0, 0]} />
+                <DimensionLabel text={t('dimensionWidth', { width: COURT_WIDTH })} position={[0, 0.1, COURT_LENGTH / 2 + 1]} rotation={[-Math.PI / 2, 0, 0]} />
 
                 {/* Wall Height (Back Right Corner) */}
-                <DimensionLabel text={`Tinggi Dinding: ${WALL_HEIGHT}m`} position={[COURT_WIDTH / 2 + 3, 0.1, -COURT_LENGTH / 2 - 1]} rotation={[-Math.PI / 2, 0, 0]} />
+                <DimensionLabel text={t('dimensionWallHeight', { height: WALL_HEIGHT })} position={[COURT_WIDTH / 2 + 3, 0.1, -COURT_LENGTH / 2 - 1]} rotation={[-Math.PI / 2, 0, 0]} />
             </group>
         </group>
     );

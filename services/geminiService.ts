@@ -1,4 +1,3 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 import type { CourtDesignPartial } from '../types';
 
@@ -42,15 +41,30 @@ const responseSchema = {
   },
 };
 
-export const generateCourtDesign = async (prompt: string): Promise<CourtDesignPartial> => {
+const systemInstructions = {
+  en: `You are a world-class Padel court designer. Your task is to generate creative and aesthetically pleasing designs based on user prompts. You MUST respond ONLY with a valid JSON object that conforms to the provided schema. Ensure colors have good contrast and the design is cohesive. Glass opacity should be a low number for transparency.`,
+  id: `Anda adalah desainer lapangan Padel kelas dunia. Tugas Anda adalah menghasilkan desain yang kreatif dan estetis berdasarkan permintaan pengguna. Anda HARUS merespons HANYA dengan objek JSON yang valid yang sesuai dengan skema yang disediakan. Pastikan warna memiliki kontras yang baik dan desainnya kohesif. Opasitas kaca harus berupa angka rendah untuk transparansi.`
+};
+
+const errorMessages = {
+    en: "Failed to generate AI design. Please check your prompt or API key.",
+    id: "Gagal membuat desain AI. Harap periksa perintah atau kunci API Anda."
+};
+
+const promptPrefixes = {
+    en: "Design a padel court with the following theme: ",
+    id: "Rancang lapangan padel dengan tema berikut: "
+};
+
+
+export const generateCourtDesign = async (prompt: string, lang: 'en' | 'id' = 'id'): Promise<CourtDesignPartial> => {
   try {
-    const systemInstruction = `Anda adalah desainer lapangan Padel kelas dunia. Tugas Anda adalah menghasilkan desain yang kreatif dan estetis berdasarkan permintaan pengguna. Anda HARUS merespons HANYA dengan objek JSON yang valid yang sesuai dengan skema yang disediakan. Pastikan warna memiliki kontras yang baik dan desainnya kohesif. Opasitas kaca harus berupa angka rendah untuk transparansi.`;
+    const systemInstruction = systemInstructions[lang];
+    const fullPrompt = `${promptPrefixes[lang]}${prompt}`;
 
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
-      // FIX: The `contents` field was using a chat-style array for a single prompt.
-      // Switched to a simple string as recommended by the guidelines for single-turn text generation.
-      contents: `Rancang lapangan padel dengan tema berikut: ${prompt}`,
+      contents: fullPrompt,
       config: {
         systemInstruction,
         responseMimeType: "application/json",
@@ -61,7 +75,6 @@ export const generateCourtDesign = async (prompt: string): Promise<CourtDesignPa
     const jsonText = response.text.trim();
     const design = JSON.parse(jsonText);
     
-    // Validate and clamp values
     if (design.glassOpacity) {
       design.glassOpacity = Math.max(0.05, Math.min(0.5, design.glassOpacity));
     }
@@ -69,6 +82,6 @@ export const generateCourtDesign = async (prompt: string): Promise<CourtDesignPa
     return design as CourtDesignPartial;
   } catch (error) {
     console.error("Error generating court design with Gemini:", error);
-    throw new Error("Gagal membuat desain AI. Harap periksa perintah atau kunci API Anda.");
+    throw new Error(errorMessages[lang]);
   }
 };

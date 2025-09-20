@@ -1,11 +1,12 @@
-
 import React, { useState, useCallback, Suspense } from 'react';
 import type { CourtDesign, CourtDesignPartial } from './types';
 import { generateCourtDesign } from './services/geminiService';
 import ControlPanel from './components/ControlPanel';
 import Canvas3D from './components/Canvas3D';
 import Loader from './components/Loader';
-import { GithubIcon } from './components/Icons';
+import { Github } from 'lucide-react';
+import { useI18n } from './contexts/i18n';
+import LanguageSwitcher from './components/LanguageSwitcher';
 
 const DEFAULT_DESIGN: CourtDesign = {
   courtColor: '#005A9C',
@@ -21,6 +22,7 @@ function App() {
   const [design, setDesign] = useState<CourtDesign>(DEFAULT_DESIGN);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { t, language } = useI18n();
 
   const handleDesignChange = useCallback((newValues: CourtDesignPartial) => {
     setDesign(prev => ({ ...prev, ...newValues }));
@@ -31,26 +33,29 @@ function App() {
     setIsLoading(true);
     setError(null);
     try {
-      const aiDesign = await generateCourtDesign(prompt);
+      const aiDesign = await generateCourtDesign(prompt, language);
       setDesign(prev => ({ ...prev, ...aiDesign }));
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message);
       } else {
-        setError("Terjadi kesalahan yang tidak diketahui.");
+        setError(t("unknownError"));
       }
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [language, t]);
 
   return (
     <div className="min-h-screen w-full flex flex-col lg:flex-row bg-gray-900 text-white font-sans">
       <header className="absolute top-0 left-0 w-full p-4 flex justify-between items-center z-20">
-        <h1 className="text-xl md:text-2xl font-bold text-white tracking-wider">Desainer Lapangan Padel AI</h1>
-        <a href="https://github.com/google/genai-api-web-apps" target="_blank" rel="noopener noreferrer" className="text-white hover:text-blue-400 transition-colors">
-          <GithubIcon className="w-8 h-8" />
-        </a>
+        <h1 className="text-xl md:text-2xl font-bold text-white tracking-wider">{t('appTitle')}</h1>
+        <div className="flex items-center gap-4">
+          <LanguageSwitcher />
+          <a href="https://github.com/google/genai-api-web-apps" target="_blank" rel="noopener noreferrer" className="text-white hover:text-blue-400 transition-colors" aria-label={t('githubLink')}>
+            <Github className="w-7 h-7" />
+          </a>
+        </div>
       </header>
 
       <ControlPanel
