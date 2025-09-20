@@ -1,0 +1,5 @@
+{
+  "name": "Padel 3D",
+  "description": "Aplikasi 3D interaktif yang memungkinkan pengguna mendesain lapangan Padel. Pengguna dapat menyesuaikan warna dan bahan secara manual, atau menggunakan asisten AI yang didukung oleh Gemini API untuk menghasilkan desain dari perintah teks.",
+  "requestFramePermissions": []
+}
